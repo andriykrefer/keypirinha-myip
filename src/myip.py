@@ -5,60 +5,44 @@ import socket
 import keypirinha as kp
 import keypirinha_net as kpnet
 import keypirinha_util as kpu
+import time
 
 
-class MyIP(kp.Plugin):
+class MyIPExtended(kp.Plugin):
     """
-    Get your public and local IP directly from Keypirinha.
+    Get your public and local IPs directly from Keypirinha.
     """
-
-    ITEM_CAT = kp.ItemCategory.USER_BASE + 1
-    KEYWORD = 'ip'
 
     def __init__(self):
         super().__init__()
         self._urlopener = kpnet.build_urllib_opener()
 
-    def on_suggest(self, user_input, items_chain):
-        if user_input.lower() == self.KEYWORD:
-            public_ip = self._get_public_ip()
-            local_ip = self._get_local_ip()
-
-            self.set_catalog(
-                [
-                    self.create_item(
-                        category=kp.ItemCategory.KEYWORD,
-                        label='Your public IP',
-                        short_desc=public_ip,
-                        target='public_ip',
-                        args_hint=kp.ItemArgsHint.FORBIDDEN,
-                        hit_hint=kp.ItemHitHint.NOARGS
-                    ),
-                    self.create_item(
-                        category=kp.ItemCategory.KEYWORD,
-                        label='Your local IP',
-                        short_desc=local_ip,
-                        target='local_ip',
-                        args_hint=kp.ItemArgsHint.FORBIDDEN,
-                        hit_hint=kp.ItemHitHint.NOARGS
-                    )
-                ]
-            )
+    def on_catalog(self):
+        self._rebuild_catalog()
 
     def on_execute(self, item, action):
         kpu.set_clipboard(item.short_desc())
+        self._rebuild_catalog()
 
     def on_events(self, flags):
         if flags & kp.Events.NETOPTIONS:
             self._urlopener = kpnet.build_urllib_opener()
+            self._rebuild_catalog()
 
-    def _get_public_ip(self):
+    def _get_public_ipv4(self):
         try:
-            with self._urlopener.open('http://icanhazip.com') as res:
+            with self._urlopener.open('https://api4.my-ip.io/ip') as res:
                 return res.read().decode('utf-8')
         except Exception as ex:
             self.err(ex)
-            return 'Could not establish your public ip'
+            return 'Could not establish your public ipv4'
+    def _get_public_ipv6(self):
+        try:
+            with self._urlopener.open('https://api6.my-ip.io/ip') as res:
+                return res.read().decode('utf-8')
+        except Exception as ex:
+            self.err(ex)
+            return 'Could not establish your public ipv6'
 
     def _get_local_ip(self):
         try:
@@ -68,3 +52,41 @@ class MyIP(kp.Plugin):
         except Exception as ex:
             self.err(ex)
             return 'Could not establish your local ip'
+
+    def _rebuild_catalog(self):
+        start_time = time.time()
+
+        public_ipv4 = self._get_public_ipv4()
+        public_ipv6 = self._get_public_ipv6()
+        local_ip = self._get_local_ip()
+
+        catalog = [
+            self.create_item(
+                category=kp.ItemCategory.KEYWORD,
+                label='My Public IPv4',
+                short_desc=public_ipv4,
+                target='public_ipv4',
+                args_hint=kp.ItemArgsHint.FORBIDDEN,
+                hit_hint=kp.ItemHitHint.NOARGS
+            ),
+            self.create_item(
+                category=kp.ItemCategory.KEYWORD,
+                label='My Public IPv6',
+                short_desc=public_ipv6,
+                target='public_ipv6',
+                args_hint=kp.ItemArgsHint.FORBIDDEN,
+                hit_hint=kp.ItemHitHint.NOARGS
+            ),
+            self.create_item(
+                category=kp.ItemCategory.KEYWORD,
+                label='My local IP',
+                short_desc=local_ip,
+                target='local_ip',
+                args_hint=kp.ItemArgsHint.FORBIDDEN,
+                hit_hint=kp.ItemHitHint.NOARGS
+            )
+        ]
+        self.set_catalog(catalog)
+
+        elapsed = time.time() - start_time
+        self.info("Cataloged {} items in {:0.1f} seconds".format(len(catalog), elapsed))
