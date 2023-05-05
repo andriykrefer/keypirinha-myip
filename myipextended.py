@@ -59,31 +59,35 @@ class MyIPExtended(kp.Plugin):
         public_ipv4 = self._get_public_ipv4()
         public_ipv6 = self._get_public_ipv6()
         local_ip = self._get_local_ip()
+        icon=self.load_icon('res://%s/%s'%(self.package_full_name(),'logo.png'))
 
         catalog = [
             self.create_item(
                 category=kp.ItemCategory.KEYWORD,
-                label='My Public IPv4',
+                label='My IP: Public IPv4',
                 short_desc=public_ipv4,
                 target='public_ipv4',
                 args_hint=kp.ItemArgsHint.FORBIDDEN,
-                hit_hint=kp.ItemHitHint.NOARGS
+                hit_hint=kp.ItemHitHint.NOARGS,
+                icon_handle=icon
             ),
             self.create_item(
                 category=kp.ItemCategory.KEYWORD,
-                label='My Public IPv6',
+                label='My IP: Public IPv6',
                 short_desc=public_ipv6,
                 target='public_ipv6',
                 args_hint=kp.ItemArgsHint.FORBIDDEN,
-                hit_hint=kp.ItemHitHint.NOARGS
+                hit_hint=kp.ItemHitHint.NOARGS,
+                icon_handle=icon
             ),
             self.create_item(
                 category=kp.ItemCategory.KEYWORD,
-                label='My local IP',
+                label='My IP: Local IPv4',
                 short_desc=local_ip,
                 target='local_ip',
                 args_hint=kp.ItemArgsHint.FORBIDDEN,
-                hit_hint=kp.ItemHitHint.NOARGS
+                hit_hint=kp.ItemHitHint.NOARGS,
+                icon_handle=icon
             )
         ]
         self.set_catalog(catalog)
