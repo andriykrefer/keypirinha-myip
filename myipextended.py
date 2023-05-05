@@ -8,7 +8,7 @@ import keypirinha_util as kpu
 import time
 
 
-class MyIPExtended(kp.Plugin):
+class MyIpExtended(kp.Plugin):
     """
     Get your public and local IPs directly from Keypirinha.
     """

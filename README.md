@@ -1,6 +1,6 @@
-# Keypirinha Plugin: MyIPExtended
+# Keypirinha Plugin: MyIpExtended
 
-This is MyIPExtended, a plugin for the
+This is MyIpExtended, a plugin for the
 [Keypirinha](http://keypirinha.com) launcher.
 
 Get your public and local IPs (v4 and v6) directly from Keypirinha.
@@ -8,10 +8,6 @@ Get your public and local IPs (v4 and v6) directly from Keypirinha.
 This is a fork from [keypirinha-myip](https://github.com/Fuhrmann/keypirinha-myip)
 
 ![Demo](usage.png)
-
-## Download
-https://github.com/Fuhrmann/keypirinha-myip/releases/latest
-https://github.com/andriykrefer/keypirinha-myip/releases/latest
 
 ## Install
 
@@ -21,7 +17,7 @@ https://github.com/andriykrefer/keypirinha-myip/releases/latest
 MyIpExtended is on PackageControl repository
 
 ### Manually
-First download [MyIpExtended here](https://github.com/andriykrefer/keypirinha-myip/releases/latest).
+First download [MyIpExtended here](https://github.com/andriykrefer/keypirinha-myipextended/releases/latest).
 
 Once the `MyIpExtended.keypirinha-package` file is downloaded,
 move it to the `InstalledPackage` folder located at:
