@@ -1,27 +1,29 @@
-<p align="center">
-  <img src="src/myip.ico" width="100" height="100" />
-</p>
+# Keypirinha Plugin: MyIPExtended
 
-# Keypirinha Plugin: MyIP
-
-This is MyIP, a plugin for the
+This is MyIPExtended, a plugin for the
 [Keypirinha](http://keypirinha.com) launcher.
 
-Get your public and local IP directly from Keypirinha.
+Get your public and local IPs (v4 and v6) directly from Keypirinha.
+
+This is a fork from [keypirinha-myip](https://github.com/Fuhrmann/keypirinha-myip)
 
 ![Demo](usage.png)
 
 ## Download
 https://github.com/Fuhrmann/keypirinha-myip/releases/latest
+https://github.com/andriykrefer/keypirinha-myip/releases/latest
 
 ## Install
 
-#### Managed
+### Via PackageControl
 [@ueffel](https://github.com/ueffel) wrote [PackageControl](https://github.com/ueffel/Keypirinha-PackageControl), a package manager that eases the install of third-party packages.
-It must be installed manually.
 
-#### Manual
-Once the `MyIP.keypirinha-package` file is installed,
+MyIpExtended is on PackageControl repository
+
+### Manually
+First download [MyIpExtended here](https://github.com/andriykrefer/keypirinha-myip/releases/latest).
+
+Once the `MyIpExtended.keypirinha-package` file is downloaded,
 move it to the `InstalledPackage` folder located at:
 
 * `Keypirinha\portable\Profile\InstalledPackages` in **Portable mode**
@@ -29,19 +31,23 @@ move it to the `InstalledPackage` folder located at:
   final path would look like
   `C:\Users\%USERNAME%\AppData\Roaming\Keypirinha\InstalledPackages`)
 
-
 ## Usage
 
-Open Keypirinha and type 'ip' or 'IP'. Your local and public IP will appear on Keypirinha's catalog. Press `ENTER` to copy.
+Open Keypirinha and type 'ip' or 'my ip'. Your local iPv4 and public IPv4 and IPv6 will appear on Keypirinha's catalog. Press `ENTER` to copy.
 
-## Change Log
-### v1.0
-* Released
+When your network settings change, you can press `ENTER` on any "My IP" item to refresh the IP addresses.
+
+## Differences from MyIP
+
+MyIpExtended is a fork from MyIP. Its main changes are:
+
+- Add IPv4 and IPv6 items (original chooses one automatically)
+- Manual refresh. Original refreshes everytime you type "ip". MyIpExtended only refreshes when you press `ENTER` on an item, rebuild its catalog or it detects a network change.
+- New item description ("My IP" in the place of "Your IP")
 
 
 ## License
 This package is distributed under the terms of the MIT license.
 
-
-## Credits
-The icon used in this plugin was provided by [icons8](https://icons8.com)
+## Attribution
+Networking icon created by [Corner Pixel - Flaticon](https://www.flaticon.com/free-icons/networking)
